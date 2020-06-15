@@ -7,5 +7,5 @@ const postSchema = new Schema({
     content: { type: String, required: true },
     //later connected to User model
     creator: { type: Object, required: String }
-})
+}, { timestamps: true })
 
