@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { validationResult } = require('express-validator')
 const Post = require('../models/post')
+const { default: image } = require('../../homework-app/src/components/Image/Image')
 
 exports.getPosts = (req, res, next) => {
     Post.find()
@@ -110,6 +111,9 @@ exports.updatePost = (req, res, next) => {
                 const error = new Error('Post not found')
                 error.statusCode = 404
                 throw error
+            }
+            if(imageUrl !== post.imageUrl) {
+                clearImagePath(post.imageUrl)
             }
             post.title = title
             post.content = content
