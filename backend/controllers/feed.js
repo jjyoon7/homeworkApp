@@ -36,7 +36,7 @@ exports.createPost = (req, res, next) => {
 
     const post = new Post({
         title: title, 
-        imageUrl: 'images/bg.png',
+        imageUrl: imageUrl,
         content: content,
         creator: { name : 'Jay' }
     })
