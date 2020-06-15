@@ -10,6 +10,17 @@ const morgan = require('morgan')
 
 const app = express()
 
+const multer = require('multer')
+const { createBrotliCompress } = require('zlib')
+
+const fileStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, new Date().toISOString() + '-' + file.originalname)
+    }
+})
 
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
