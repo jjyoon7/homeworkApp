@@ -2,18 +2,19 @@ const validationResult = require('express-validator')
 const Post = require('../models/post')
 
 exports.getPosts = (req, res, next) => {
-    res.status(200).json({
-        posts: [{ 
-            _id: '1',
-            title: 'First secret', 
-            content: 'This is the secret diary to share!', 
-            imageUrl: 'images/bg.png',
-            creator: {
-                name: 'Jay'
-            },
-            createdAt: new Date()
-        }]
-    })
+    Post.find()
+        .then(posts => {
+            res.status(200).json({
+                message: 'Posts fetched',
+                posts: posts
+            })
+        })
+        .catch(err => {
+            if(!err.statusCode){
+                  err.statusCode = 500
+              }
+              next(err)
+        })
 }
 
 exports.createPost = (req, res, next) => {
