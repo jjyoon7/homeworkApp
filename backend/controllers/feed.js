@@ -1,3 +1,5 @@
+const fs = require('fs')
+const path = require('path')
 const { validationResult } = require('express-validator')
 const Post = require('../models/post')
 
@@ -105,8 +107,8 @@ exports.updatePost = (req, res, next) => {
     Post.findById(postId)
         .then(post => {
             if(!post) {
-                const error = new Error('Validation failed, user input data is incorrect.')
-                error.statusCode = 422
+                const error = new Error('Post not found')
+                error.statusCode = 404
                 throw error
             }
             post.title = title
@@ -126,4 +128,9 @@ exports.updatePost = (req, res, next) => {
             }
             next(err)
         })
+}
+
+const clearImagePath = filePath => {
+    filePath = path.join(__dirname, '..', filePath)
+    fs.unlink(filePath, err => console.log(err))
 }
