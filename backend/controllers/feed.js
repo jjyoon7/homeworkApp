@@ -78,3 +78,7 @@ exports.getPost = (req, res, next) => {
             next(err)
         })
 }
+
+exports.updatePost = (req, res, next) => {
+    
+}
