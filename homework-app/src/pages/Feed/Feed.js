@@ -59,7 +59,12 @@ class Feed extends Component {
       })
       .then(resData => {
         this.setState({
-          posts: resData.posts,
+          posts: resData.posts.map( post => {
+            return {
+              ...post,
+              imagePath: post.imageUrl
+            }
+          }),
           totalPosts: resData.totalItems,
           postsLoading: false
         });
@@ -105,7 +110,13 @@ class Feed extends Component {
     this.setState({
       editLoading: true
     });
-    // Set up data (with image!)
+    
+    const formData = new FormData()
+
+    formData.append('title', postData.title)
+    formData.append('content', postData.content)
+    formData.append('image', postData.image)
+
     let url = 'http://localhost:5000/feed/post';
     let method = 'POST'
     if (this.state.editPost) {
@@ -113,14 +124,8 @@ class Feed extends Component {
     }
 
     fetch(url, {
-      method: method,
-      headers: {
-        'Content-Type' : 'application/json'
-      },  
-      body: JSON.stringify({
-        title: postData.title,
-        content: postData.content
-      })
+      method: method, 
+      body: formData
       })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
