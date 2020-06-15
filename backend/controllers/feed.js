@@ -30,6 +30,7 @@ exports.createPost = (req, res, next) => {
 
     const post = new Post({
         title: title, 
+        imageUrl: 'images/bg.png',
         content: content,
         creator: { name : 'Jay' }
     })
@@ -43,13 +44,6 @@ exports.createPost = (req, res, next) => {
             })
         })
         .catch(err => {
-            console.log(err)
+            console.log(err )
         })
-
-    res.status(201).json({
-        message: 'Secret diary post created successfully',
-        post: { _id: new Date().toISOString(), 
-                createdAt: new Date()
-            }
-    })
 }
