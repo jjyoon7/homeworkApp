@@ -21,4 +21,4 @@ router.put('/signup', [
     body('name').trim().not().isEmpty()
 ], authController.signup)
 
-modeul.exports = router
+module.exports = router

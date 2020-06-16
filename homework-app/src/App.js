@@ -18,7 +18,7 @@ class App extends Component {
   state = {
     showBackdrop: false,
     showMobileNav: false,
-    isAuth: true,
+    isAuth: false,
     token: null,
     userId: null,
     authLoading: false,
@@ -107,9 +107,9 @@ class App extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        email: authData.email,
-        password: authData.password,
-        name: authData.name
+        email: authData.signupForm.email.value,
+        password: authData.signupForm.password.value,
+        name: authData.signupForm.name.value
       })
     })
       .then(res => {
