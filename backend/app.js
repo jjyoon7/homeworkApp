@@ -49,7 +49,7 @@ const uri = process.env.ATLAS_URI
 app.use(morgan('dev'))
 
 app.use('/feed', feedRoutes)
-app.use('/auth', authRoutes)
+app.use('/signup', authRoutes)
 
 app.use((error, req, res, next) => {
     console.log(error)
