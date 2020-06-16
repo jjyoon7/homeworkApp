@@ -143,7 +143,7 @@ exports.deletePost = (req, res, next) => {
                 error.statusCode = 404
                 throw error
             }
-            clearImagePath(postId.imageUrl)
+            clearImagePath(post.imageUrl)
             return Post.findByIdAndRemove(postId)
         })
         .then(result => {
