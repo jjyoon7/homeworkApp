@@ -106,11 +106,11 @@ class App extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: {
+      body: JSON.stringify({
         email: authData.email,
         password: authData.password,
         name: authData.name
-      }
+      })
     })
       .then(res => {
         if (res.status === 422) {
