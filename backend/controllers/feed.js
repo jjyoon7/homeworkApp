@@ -13,15 +13,8 @@ exports.getPosts = (req, res, next) => {
         .countDocuments
         .then(count  => {
             totalItems = count
+            return Post.find()
         })
-        .catch(err => {
-            if(!err.statusCode){
-                err.statusCode = 500
-            }
-            next(err)
-        })
-        
-    Post.find()
         .then(posts => {
             res.status(200).json({
                 message: 'Posts fetched',
@@ -30,9 +23,9 @@ exports.getPosts = (req, res, next) => {
         })
         .catch(err => {
             if(!err.statusCode){
-                  err.statusCode = 500
-              }
-              next(err)
+                err.statusCode = 500
+            }
+            next(err)
         })
 }
 
