@@ -113,7 +113,7 @@ exports.updatePost = (req, res, next) => {
                 throw error
             }
             if(imageUrl !== post.imageUrl) {
-                clearImagePath(post.imageUrl)
+                deleteImageFile(post.imageUrl)
             }
             post.title = title
             post.content = content
@@ -143,7 +143,7 @@ exports.deletePost = (req, res, next) => {
                 error.statusCode = 404
                 throw error
             }
-            clearImagePath(post.imageUrl)
+            deleteImageFile(post.imageUrl)
             return Post.findByIdAndRemove(postId)
         })
         .then(result => {
@@ -160,7 +160,7 @@ exports.deletePost = (req, res, next) => {
         })
 }
 
-const clearImagePath = filePath => {
+const deleteImageFile = filePath => {
     filePath = path.join(__dirname, '..', filePath)
     fs.unlink(filePath, err => console.log(err))
 }
