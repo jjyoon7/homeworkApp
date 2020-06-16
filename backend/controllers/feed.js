@@ -10,7 +10,7 @@ exports.getPosts = (req, res, next) => {
     let totalItems
 
     Post.find()
-        .countDocuments
+        .countDocuments()
         .then(count  => {
             totalItems = count
             return Post.find()
