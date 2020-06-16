@@ -20,7 +20,8 @@ exports.getPosts = (req, res, next) => {
         .then(posts => {
             res.status(200).json({
                 message: 'Posts fetched',
-                posts: posts
+                posts: posts,
+                totalItems: totalItems
             })
         })
         .catch(err => {
