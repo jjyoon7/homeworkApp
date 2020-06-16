@@ -12,6 +12,7 @@ import SinglePostPage from './pages/Feed/SinglePost/SinglePost';
 import LoginPage from './pages/Auth/Login';
 import SignupPage from './pages/Auth/Signup';
 import './App.css';
+import auth from './pages/Auth/Auth';
 
 class App extends Component {
   state = {
@@ -100,7 +101,17 @@ class App extends Component {
   signupHandler = (event, authData) => {
     event.preventDefault();
     this.setState({ authLoading: true });
-    fetch('URL')
+    fetch('http://localhost:5000/auth/signup', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: {
+        email: authData.email,
+        password: authData.password,
+        name: authData.name
+      }
+    })
       .then(res => {
         if (res.status === 422) {
           throw new Error(
