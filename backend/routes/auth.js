@@ -4,7 +4,7 @@ const { body } = require('express-validator')
 const User = require('../models/user')
 const authController = require('../controllers/auth')
 
-router.put('/auth', [
+router.put('/signup', [
     body('email')
         .isEmail()
         .withMessage('Please enter a valid email address')
