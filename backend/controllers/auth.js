@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs')
 const User = require('../models/user')
+const { load } = require('dotenv/types')
 
 exports.signup = (req, res, next) => {
     const errors = validationResult(req)
@@ -37,4 +38,27 @@ exports.signup = (req, res, next) => {
             }
             next(err)
           })
+}
+
+exports.login = (req, res, next) => {
+    const email = req.body.email
+    const password = req.body.password
+    let loadedUser
+
+    User.findOne({ email: email })
+        .then(user => {
+            if(!user) {
+                const error = new Error('User with this email does not exists.')
+                //401 status code means lack validation / unauthorized
+                error.statusCode = 401
+                throw error
+            }
+            loadedUser = user
+        })
+        .catch(err => {
+            if(!err.statusCode){
+                err.statusCode = 500
+            }
+            next(err)
+        })
 }
