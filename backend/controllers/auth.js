@@ -54,6 +54,7 @@ exports.login = (req, res, next) => {
                 throw error
             }
             loadedUser = user
+            return bcrypt.compare(password, user.password)
         })
         .catch(err => {
             if(!err.statusCode){
