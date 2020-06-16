@@ -3,6 +3,7 @@ const path = require('path')
 
 const bodyParser = require('body-parser')
 const feedRoutes = require('./routes/feed')
+const authRoutes = require('./routes/auth')
 
 const cors = require('cors')
 const mongoose = require('mongoose')
@@ -48,6 +49,7 @@ const uri = process.env.ATLAS_URI
 app.use(morgan('dev'))
 
 app.use('/feed', feedRoutes)
+app.use('/auth', authRoutes)
 
 app.use((error, req, res, next) => {
     console.log(error)
