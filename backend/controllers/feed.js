@@ -46,9 +46,11 @@ exports.createPost = (req, res, next) => {
         throw error
     }
     console.log('POST')
+
     const title = req.body.title
     const content = req.body.content
     const imageUrl = req.file.path
+    let creator
 
     const post = new Post({
         title: title, 
@@ -62,10 +64,15 @@ exports.createPost = (req, res, next) => {
             return User.findById(req.userId)
         })
         .then(user => {
+            creator = user
             user.posts.push(post)
+            return user.save()
+        })
+        .then(result => {
             res.status(200).json({
                 message: 'Post created succesfully',
-                post: result
+                post: result,
+                creator: { _id: creator._id, name: creator.name }
             })
         })
         .catch(err => {
