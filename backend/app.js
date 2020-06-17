@@ -64,7 +64,8 @@ app.use((error, req, res, next) => {
 mongoose.connect(uri, {
                         useNewUrlParser: true,
                         useCreateIndex: true,
-                        useUnifiedTopology: true
+                        useUnifiedTopology: true,
+                        useFindAndModify: true
                         })
 
 const connection = mongoose.connection

@@ -3,6 +3,7 @@ const path = require('path')
 const { validationResult } = require('express-validator')
 const Post = require('../models/post')
 const User = require('../models/user')
+const user = require('../models/user')
 
 
 exports.getPosts = (req, res, next) => {
@@ -133,6 +134,11 @@ exports.updatePost = (req, res, next) => {
             if(!post) {
                 const error = new Error('Post not found')
                 error.statusCode = 404
+                throw error
+            }
+            if(post.creator !== req.userId) {
+                const error = new Error('Auauthorized user.')
+                error.statusCode = 403
                 throw error
             }
             if(imageUrl !== post.imageUrl) {
