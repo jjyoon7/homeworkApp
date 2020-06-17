@@ -136,7 +136,7 @@ exports.updatePost = (req, res, next) => {
                 error.statusCode = 404
                 throw error
             }
-            if(post.creator !== req.userId) {
+            if(post.creator.toString() !== req.userId) {
                 const error = new Error('Auauthorized user.')
                 error.statusCode = 403
                 throw error
