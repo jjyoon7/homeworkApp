@@ -87,7 +87,7 @@ exports.login = (req, res, next) => {
 }
 
 exports.getUserStatus = (req, res, next) => {
-    User.findById(req.id)
+    User.findById(req.userId)
         .then(user => {
             if(!user) {
                 const error = new Error('No user found.')
