@@ -4,6 +4,7 @@ const { body } = require('express-validator')
 const User = require('../models/user')
 const authController = require('../controllers/auth')
 const isAuth = require('../middleware/is-auth')
+const { default: auth } = require('../../homework-app/src/pages/Auth/Auth')
 router.put('/signup', [
     body('email')
         .isEmail()
@@ -24,5 +25,7 @@ router.put('/signup', [
 router.post('/login', authController.login)
 
 router.get('/status', isAuth, authController.getUserStatus)
+
+router.patch('/status', isAuth, authController.updateUserStatus)
 
 module.exports = router
