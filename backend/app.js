@@ -42,7 +42,9 @@ app.use('/images', express.static(path.join(__dirname, 'images')))
 
 require('dotenv').config()
 
-app.use(cors())
+app.use(cors({
+    allowedHeaders: ['Content-Type', 'Authorization']
+}))
 
 const uri = process.env.ATLAS_URI
 
