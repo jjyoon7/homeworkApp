@@ -69,7 +69,7 @@ exports.login = (req, res, next) => {
                         userId: loadedUser._id.toString()
                     },
                     'privatekeytogenerateatokenstring',
-                    { expiresIn: 'h1' }
+                    { expiresIn: '1h' }
                 )
             
             res.status(200).json({
