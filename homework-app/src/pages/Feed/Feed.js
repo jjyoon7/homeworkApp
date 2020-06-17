@@ -88,9 +88,9 @@ class Feed extends Component {
         Authorization: 'Bearer ' + this.props.token,
         'Content-Type': 'application/json'
       },
-      body: {
+      body: JSON.stringify({
         status: this.state.status
-      }
+      })
     })
       .then(res => {
         if (res.status !== 200 && res.status !== 201) {
