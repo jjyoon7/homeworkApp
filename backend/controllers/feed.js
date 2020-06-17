@@ -2,6 +2,7 @@ const fs = require('fs')
 const path = require('path')
 const { validationResult } = require('express-validator')
 const Post = require('../models/post')
+const User = require('../models/user')
 
 
 exports.getPosts = (req, res, next) => {
@@ -58,7 +59,10 @@ exports.createPost = (req, res, next) => {
 
     post.save()
         .then(result => {
-            console.log(result)
+            return User.findById(req.userId)
+        })
+        .then(user => {
+            user.posts.push(post)
             res.status(200).json({
                 message: 'Post created succesfully',
                 post: result
