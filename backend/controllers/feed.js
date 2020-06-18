@@ -55,16 +55,16 @@ exports.createPost = async (req, res, next) => {
     })
 
     try {
-        const newPost = await post.save()
-        const creator = await User.findById(req.userId)
+        const post = await post.save()
+        const user = await User.findById(req.userId)
     
-        creator.posts.push(newPost)
-        creator.save()
+        user.posts.push(post)
+        await user.save()
 
         res.status(200).json({
             message: 'Post created succesfully',
             post: post,
-            creator: { _id: creator._id, name: creator.name }
+            creator: { _id: user._id, name: user.name }
         })     
     } catch (err) {
         if(!err.statusCode){
