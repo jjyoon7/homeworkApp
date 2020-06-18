@@ -76,10 +76,10 @@ exports.createPost = async (req, res, next) => {
 
 exports.getPost = async (req, res, next) => {
     const postId = req.params.postId
-    
+   
+
     try {
         const post = await Post.findById(postId)
-
         if(!post) {
             const error = new Error('Post not found')
             error.statusCode = 404
@@ -121,6 +121,8 @@ exports.updatePost = async (req, res, next) => {
         throw error   
     }
 
+    
+
     try {
         const post = await Post.findById(postId)
 
@@ -141,7 +143,7 @@ exports.updatePost = async (req, res, next) => {
         post.content = content
         post.imageUrl = imageUrl
         
-        await post.save()
+        const result = await post.save()
 
         res.status(200).json({
             message: 'Post updated',
@@ -157,10 +159,9 @@ exports.updatePost = async (req, res, next) => {
 
 exports.deletePost = async (req, res, next) => {
     const postId = req.params.postId
-
+    
     try {
         const post = await Post.findById(postId)
-        
         if(!post) {
             const error = new Error('Post not found')
             error.statusCode = 404

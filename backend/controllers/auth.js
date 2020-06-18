@@ -43,10 +43,9 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
+    const user = await User.findOne({ email: email })
 
     try {
-        const user = await User.findOne({ email: email })
-
         if(!user) {
             const error = new Error('User with this email does not exists.')
             //401 status code means lack validation / unauthorized
@@ -85,9 +84,9 @@ exports.login = async (req, res, next) => {
 }
 
 exports.getUserStatus = async (req, res, next) => {
+    const user = await User.findById(req.userId)
+
     try {
-        const user = await User.findById(req.userId)
-        
         if(!user) {
             const error = new Error('No user found.')
             error.statusCode = 404
@@ -106,10 +105,9 @@ exports.getUserStatus = async (req, res, next) => {
 
 exports.updateUserStatus = async (req, res, next) => {
     const newStatus = req.body.status
+    const user = await User.findById(req.userId)
 
     try {
-        const user = await User.findById(req.userId)
-
         if(!user) {
             const error = new Error('No user found.')
             error.statusCode = 404
