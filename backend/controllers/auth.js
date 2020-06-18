@@ -43,7 +43,7 @@ exports.signup = async (req, res, next) => {
 exports.login = async (req, res, next) => {
     const email = req.body.email
     const password = req.body.password
-    
+
     try {
         const user = await User.findOne({ email: email })
 
@@ -84,24 +84,24 @@ exports.login = async (req, res, next) => {
     }
 }
 
-exports.getUserStatus = (req, res, next) => {
-    User.findById(req.userId)
-        .then(user => {
-            if(!user) {
-                const error = new Error('No user found.')
-                error.statusCode = 404
-                throw error
-            }
-            res.status(200).json({
-                status: user.status
-            })
+exports.getUserStatus = async (req, res, next) => {
+    try {
+        const user = await User.findById(req.userId)
+        
+        if(!user) {
+            const error = new Error('No user found.')
+            error.statusCode = 404
+            throw error
+        }
+        res.status(200).json({
+            status: user.status
         })
-        .catch(err => {
-            if(!err.statusCode){
-                err.statusCode = 500
-            }
-            next(err)
-        })
+    } catch (err) {
+        if(!err.statusCode){
+            err.statusCode = 500
+        }
+        next(err)
+    }
 }
 
 exports.updateUserStatus = (req, res, next) => {
