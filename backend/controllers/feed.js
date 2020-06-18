@@ -55,7 +55,7 @@ exports.createPost = async (req, res, next) => {
     })
 
     try {
-        const post = await post.save()
+        await post.save()
         const user = await User.findById(req.userId)
     
         user.posts.push(post)
