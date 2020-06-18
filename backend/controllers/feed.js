@@ -155,42 +155,38 @@ exports.updatePost = async (req, res, next) => {
     }
 }
 
-exports.deletePost = (req, res, next) => {
+exports.deletePost = async (req, res, next) => {
     const postId = req.params.postId
-    Post.findById(postId)
-        .then(post => {
-            if(!post) {
-                const error = new Error('Post not found')
-                error.statusCode = 404
-                throw error
-            }
-            if(post.creator.toString() !== req.userId) {
-                const error = new Error('Auauthorized user.')
-                error.statusCode = 403
-                throw error
-            }
-            deleteImageFile(post.imageUrl)
-            return Post.findByIdAndRemove(postId)
+
+    try {
+        const post = await Post.findById(postId)
+        
+        if(!post) {
+            const error = new Error('Post not found')
+            error.statusCode = 404
+            throw error
+        }
+        if(post.creator.toString() !== req.userId) {
+            const error = new Error('Auauthorized user.')
+            error.statusCode = 403
+            throw error
+        }
+        deleteImageFile(post.imageUrl)
+        await Post.findByIdAndRemove(postId)
+        
+        const user = await User.findById(req.userId)
+        user.posts.pull(postId)
+        await user.save()
+
+        res.status(200).json({
+            message: 'Post deleted.'
         })
-        .then(result => {
-            return User.findById(req.userId)
-        })
-        .then(user => {
-            user.posts.pull(postId)
-            return user.save()
-        })
-        .then(result => {
-            console.log(result)
-            res.status(200).json({
-                message: 'Post deleted.'
-            })
-        })
-        .catch(err => {
-            if(!err.statusCode){
-                err.statusCode = 500
-            }
-            next(err)
-        })
+    } catch (err) {
+        if(!err.statusCode){
+            err.statusCode = 500
+        }
+        next(err)
+    }
 }
 
 const deleteImageFile = filePath => {
