@@ -21,7 +21,7 @@ exports.getPosts = async (req, res, next) => {
             posts: posts,
             totalItems: totalItems
         })
-    } catch(err) {
+    } catch (err) {
         if(!err.statusCode){
             err.statusCode = 500
         }
@@ -29,7 +29,7 @@ exports.getPosts = async (req, res, next) => {
     }
 }
 
-exports.createPost = (req, res, next) => {
+exports.createPost = async (req, res, next) => {
     const errors = validationResult(req)
     if(!errors.isEmpty()){
         const error = new Error('Validation failed, user input data is incorrect.')
@@ -46,7 +46,6 @@ exports.createPost = (req, res, next) => {
     const title = req.body.title
     const content = req.body.content
     const imageUrl = req.file.path
-    let creator
 
     const post = new Post({
         title: title, 
@@ -55,28 +54,24 @@ exports.createPost = (req, res, next) => {
         creator: req.userId
     })
 
-    post.save()
-        .then(result => {
-            return User.findById(req.userId)
-        })
-        .then(user => {
-            creator = user
-            user.posts.push(post)
-            return user.save()
-        })
-        .then(result => {
-            res.status(200).json({
-                message: 'Post created succesfully',
-                post: post,
-                creator: { _id: creator._id, name: creator.name }
-            })
-        })
-        .catch(err => {
-            if(!err.statusCode){
-                err.statusCode = 500
-            }
-            next(err)
-        })
+    try {
+        const newPost = await post.save()
+        const creator = await User.findById(req.userId)
+    
+        creator.posts.push(newPost)
+        creator.save()
+
+        res.status(200).json({
+            message: 'Post created succesfully',
+            post: post,
+            creator: { _id: creator._id, name: creator.name }
+        })     
+    } catch (err) {
+        if(!err.statusCode){
+            err.statusCode = 500
+        }
+        next(err)
+    }
 }
 
 exports.getPost = (req, res, next) => {
