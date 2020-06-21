@@ -1,20 +1,20 @@
 const express = require('express')
-const path = require('path')
 
+const path = require('path')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const multer = require('multer')
+
 const feedRoutes = require('./routes/feed')
 const authRoutes = require('./routes/auth')
 
-const cors = require('cors')
-const mongoose = require('mongoose')
-const morgan = require('morgan')
-
-const PORT = 5000 || process.env.PORT
-
 const app = express()
 
-const multer = require('multer')
-const { createBrotliCompress } = require('zlib')
+const morgan = require('morgan')
+
+const cors = require('cors')
+
+const PORT = 5000 || process.env.PORT
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -43,12 +43,19 @@ app.use(multer({
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 require('dotenv').config()
+// app.use((req, res, next) => {
+//     res.setHeader('Access-Control-Allow-Origin', '*');
+//     res.setHeader(
+//       'Access-Control-Allow-Methods',
+//       'OPTIONS, GET, POST, PUT, PATCH, DELETE'
+//     );
+//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+//     next();
+//   });
 
 app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }))
-
-const uri = process.env.ATLAS_URI
 
 app.use(morgan('dev'))
 
@@ -63,6 +70,8 @@ app.use((error, req, res, next) => {
     res.status(status).json({ message: message, data: data})
 })
 
+const uri = process.env.ATLAS_URI
+
 mongoose.connect(uri, {
                         useNewUrlParser: true,
                         useCreateIndex: true,
@@ -70,6 +79,8 @@ mongoose.connect(uri, {
                         useFindAndModify: true
                         })
         .then(result => {
+            console.log(`server is running on port ${PORT}`)
+            console.log('mongoDB database connection established successfully.')
             const server = app.listen(PORT)
             const io = require('socket.io')(server)
             io.on('connection', socket => {
@@ -77,11 +88,3 @@ mongoose.connect(uri, {
             })
         })
         .catch(err => console.log(err))
-
-const connection = mongoose.connection
-connection.once('open', () => {
-    console.log(`server is running on port ${PORT}`)
-    console.log('mongoDB database connection established successfully.')
-})
-
-module.exports = app
