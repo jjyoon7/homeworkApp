@@ -82,7 +82,7 @@ mongoose.connect(uri, {
             console.log(`server is running on port ${PORT}`)
             console.log('mongoDB database connection established successfully.')
             const server = app.listen(PORT)
-            const io = require('socket.io')(server)
+            const io = require('./socket').init(server)
             io.on('connection', socket => {
                 console.log('Client connected')
             })
