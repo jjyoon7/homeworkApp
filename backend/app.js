@@ -9,6 +9,8 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 
+const PORT = 5000 || process.env.PORT
+
 const app = express()
 
 const multer = require('multer')
@@ -67,9 +69,15 @@ mongoose.connect(uri, {
                         useUnifiedTopology: true,
                         useFindAndModify: true
                         })
+        .then(result => {
+            const server = app.listen(PORT)
+            const io = require('socket.io')(server)
+        })
+        .catch(err => console.log(err))
 
 const connection = mongoose.connection
 connection.once('open', () => {
+    console.log(`server is running on port ${PORT}`)
     console.log('mongoDB database connection established successfully.')
 })
 
