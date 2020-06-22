@@ -62,6 +62,7 @@ exports.createPost = async (req, res, next) => {
         user.posts.push(post)
         await user.save()
 
+        //broadcast vs emit
         io.getIO().emit('posts', { action: 'create', post: post })
 
         res.status(200).json({
