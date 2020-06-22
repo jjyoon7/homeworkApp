@@ -44,6 +44,8 @@ class Feed extends Component {
     socket.on('posts', data => {
       if(data.action === 'create') {
         this.addPost(data.post)
+      } else if(data.action === 'update') {
+        this.updatePost(data.post)
       }
     })
   }
