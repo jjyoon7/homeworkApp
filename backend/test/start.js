@@ -1,9 +1,9 @@
-const expect = required('chai').expect
+// const expect = require('chai').expect
 
-it('decribe the test', function () {
-    //code to execute
-    const num1 = 2
-    const num2 = 3
+// it('decribe the test', function () {
+//     //code to execute
+//     const num1 = 2
+//     const num2 = 3
 
-    expect(num1 * num2).to.equal(6)
-})
+//     expect(num1 * num2).to.equal(6)
+// })
