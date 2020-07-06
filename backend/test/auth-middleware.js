@@ -20,5 +20,5 @@ it('should throw an error if there is no authorization header.', function() {
     //{} is res
     //empty arrow function is next()
 
-    expect(authMiddleware(req, {}, () => {})).to.throw('Header: Authorization failed.')
+    expect(authMiddleware.bind(this, req, {}, () => {})).to.throw('Header: Authorization failed.')
 })
