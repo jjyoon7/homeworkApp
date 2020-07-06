@@ -25,3 +25,13 @@ it('should throw an error if there is no authorization header.', function() {
     //with a given sequence of arguments preceding any provided when the new function is called.
     expect(authMiddleware.bind(this, req, {}, () => {})).to.throw('Header: Authorization failed.')
 })
+
+it('should throw an error if there is only one string', function() {
+    const req= {
+        get: function() {
+            return 'string'
+        }
+    }
+
+    expect(authMiddleware.bing(this, req, {}, () => {})).to.throw()
+})
