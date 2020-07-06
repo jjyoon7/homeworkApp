@@ -33,5 +33,5 @@ it('should throw an error if there is only one string', function() {
         }
     }
 
-    expect(authMiddleware.bing(this, req, {}, () => {})).to.throw()
+    expect(authMiddleware.bind(this, req, {}, () => {})).to.throw()
 })
