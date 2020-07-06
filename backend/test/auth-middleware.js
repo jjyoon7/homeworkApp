@@ -1,3 +1,5 @@
+const expect = require('chai').expect
+
 const authMiddleware = require('../middleware/is-auth')
 
 it('should throw an error if there is no authorization header.', function() {
@@ -18,5 +20,5 @@ it('should throw an error if there is no authorization header.', function() {
     //{} is res
     //empty arrow function is next()
 
-    authMiddleware(req, {}, () => {})
+    expect(authMiddleware(req, {}, () => {})).to.throw('Header: Authorization failed.')
 })
