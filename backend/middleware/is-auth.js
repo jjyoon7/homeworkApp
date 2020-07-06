@@ -9,6 +9,8 @@ module.exports = (req, res, next) => {
         throw error
     }
 
+    //split with space, and geting 2nd item in array
+    //bcs what the header look like is 'Bearer + token'
     const token = authHeader.split(' ')[1]
     let decodedToken
     try {
