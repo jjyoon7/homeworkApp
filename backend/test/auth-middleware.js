@@ -13,5 +13,10 @@ it('should throw an error if there is no authorization header.', function() {
         }
     }
 
-    authMiddleware(req)
+    //authMiddleware takes 3 args (req, res, next)
+    //req, which is what we are testing and created a dummy data for.
+    //{} is res
+    //empty arrow function is next()
+
+    authMiddleware(req, {}, () => {})
 })
