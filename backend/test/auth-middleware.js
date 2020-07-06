@@ -20,5 +20,8 @@ it('should throw an error if there is no authorization header.', function() {
     //{} is res
     //empty arrow function is next()
 
+    //The bind() method creates a new function that, 
+    //when called, has its this keyword set to the provided value, 
+    //with a given sequence of arguments preceding any provided when the new function is called.
     expect(authMiddleware.bind(this, req, {}, () => {})).to.throw('Header: Authorization failed.')
 })
