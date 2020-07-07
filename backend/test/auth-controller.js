@@ -43,10 +43,16 @@ describe('Auth controller', function() {
                     email: 'test@test.com',
                     password: 'tes',
                     name: 'john',
-                    posts: []
+                    posts: [],
+                    _id: '5c0f66b979af55031b34728a'
                 })
 
                 return user.save()
+            })
+            .then(() => {
+                const req = {
+                    userId: '5c0f66b979af55031b34728a'
+                }
             })
             .catch(err => console.log(err))
                     })
