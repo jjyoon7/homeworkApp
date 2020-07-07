@@ -9,6 +9,19 @@ describe('Auth controller', function() {
         it('should throw an error code 500 if the access to the database failed', function() {
             sinon.stub(User, 'findOne')
             User.findOne.throws()
+
+            const req = {
+                body: {
+                    email: 'test@test.com',
+                    password: 'tester'
+                }
+            }
+
+            AuthController.login(req, {}, () => {}).then(result => {
+                console.log(result)
+            })
+
+            sinon.restore()
         })
     })
 })
