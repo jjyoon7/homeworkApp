@@ -43,6 +43,18 @@ describe('Auth middleware', function() {
         })
     })
 
+    describe('Token verification', function() {
+        it('should throw an error if the token cannot be verified', function() {
+            const req = {
+                get: function() {
+                    return 'Bearer xyz'
+                }
+            }
+
+            expect(authMiddleware.bind(this, req, {}, () => {})).to.throw()
+        })
+    })
+
     describe('userId existence', function() {
         it('should get a userId after decoding the token', function() {
             const req = {
