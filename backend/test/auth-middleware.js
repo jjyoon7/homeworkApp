@@ -58,6 +58,8 @@ describe('Auth middleware', function() {
 
             authMiddleware(req, {}, () => {})
             expect(req).to.have.property('userId')
+
+            jwt.verify.restore()
         })
     })
 })
