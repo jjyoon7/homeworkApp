@@ -1,5 +1,6 @@
 const expect = require('chai').expect
 const jwt = require('jsonwebtoken')
+const sinon = require('sinon')
 
 const authMiddleware = require('../middleware/is-auth')
 
@@ -50,6 +51,8 @@ describe('Auth middleware', function() {
                 }
             }
 
+            sinon.stub(jwt, 'verify')
+            
             jwt.verify = function() {
                 return { userId: 'abc' }
             }
