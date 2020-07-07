@@ -53,6 +53,18 @@ describe('Auth controller', function() {
                 const req = {
                     userId: '5c0f66b979af55031b34728a'
                 }
+
+                //mimik this 'res.status(200).json({status: user.status})'
+                const res = {
+                    statusCode: 500,
+                    userStatus: null,
+                    status: function(code) {
+                        return this.statusCode = code
+                    },
+                    json: function(data) {
+                        this.userStatus = data.status
+                    }
+                }
             })
             .catch(err => console.log(err))
                     })
