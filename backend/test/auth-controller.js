@@ -39,13 +39,14 @@ describe('Auth controller', function() {
                             useFindAndModify: true
                             })
             .then(result => {
-                console.log(`server is running on port ${PORT}`)
-                console.log('mongoDB database connection established successfully.')
-                const server = app.listen(PORT)
-                const io = require('./socket').init(server)
-                io.on('connection', socket => {
-                    console.log('Client connected')
+                const user = new User({
+                    email: 'test@test.com',
+                    password: 'tes',
+                    name: 'john',
+                    posts: []
                 })
+
+                return user.save()
             })
             .catch(err => console.log(err))
                     })
