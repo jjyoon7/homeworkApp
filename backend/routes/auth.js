@@ -22,6 +22,7 @@ router.put('/signup', [
     body('name').trim().not().isEmpty()
 ], authController.signup)
 
+//these API endpoints does not need unit testing, since it is handle by the express itself
 router.post('/login', authController.login)
 
 router.get('/status', isAuth, authController.getUserStatus)
