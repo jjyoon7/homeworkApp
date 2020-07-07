@@ -49,5 +49,5 @@ describe('Auth controller', function() {
             })
             .catch(err => console.log(err))
                     })
-                })
+            })
 })
