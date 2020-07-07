@@ -52,10 +52,9 @@ describe('Auth middleware', function() {
             }
 
             sinon.stub(jwt, 'verify')
-            
-            jwt.verify = function() {
-                return { userId: 'abc' }
-            }
+            jwt.verify.returns({
+                userId: 'abc'
+            })
 
             authMiddleware(req, {}, () => {})
             expect(req).to.have.property('userId')
