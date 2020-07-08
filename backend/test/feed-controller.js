@@ -34,7 +34,16 @@ describe('Feed controller', function() {
 
     describe('createPost', function() {
         it('should be able create a post and that post should save in posts array of the user who created', function(done) {
-
+            const req = {
+                body: {
+                    title: 'post title',
+                    content: 'post content',
+                    file: {
+                        path: 'thisisthepath'
+                    },
+                    creator: '5c0f66b979af55031b34729a'
+                }
+            }
         })
     })
 
