@@ -44,6 +44,13 @@ describe('Feed controller', function() {
                     creator: '5c0f66b979af55031b34729a'
                 }
             }
+
+            const res = {
+                status: function() {},
+                json: function() {}
+            }
+
+            FeedController.createPost(req, res, () => {})
         })
     })
 
