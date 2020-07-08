@@ -10,6 +10,11 @@ const uri = process.env.ATLAS_TEST_URI
 
 
 describe('Auth controller', function() {
+
+    before(function(done) {
+
+    })
+
     describe('Login', function() {
         it('should throw an error code 500 if the access to the database failed', function(done) {
             sinon.stub(User, 'findOne')
@@ -82,5 +87,9 @@ describe('Auth controller', function() {
             })
             .catch(err => console.log(err))
                     })
-            })
+    })
+
+    after(function(done) {
+        
+    })
 })
