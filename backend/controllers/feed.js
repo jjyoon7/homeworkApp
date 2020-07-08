@@ -62,7 +62,7 @@ exports.createPost = async (req, res, next) => {
         const user = await User.findById(req.userId)
     
         user.posts.push(post)
-        await user.save()
+        const savedUser = await user.save()
 
         //broadcast vs emit
         io.getIO().emit('posts', { action: 'create', 
@@ -72,7 +72,8 @@ exports.createPost = async (req, res, next) => {
             message: 'Post created succesfully',
             post: post,
             creator: { _id: user._id, name: user.name }
-        })     
+        }) 
+        return savedUser    
     } catch (err) {
         if(!err.statusCode){
             err.statusCode = 500
