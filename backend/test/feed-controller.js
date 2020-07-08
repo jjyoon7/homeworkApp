@@ -23,7 +23,7 @@ describe('Feed controller', function() {
                 password: 'test',
                 name: 'john',
                 posts: [],
-                _id: '5c0f66b979af55031b34729a'
+                _id: '5c0f66b979af55031b34739a'
             })
             return user.save()
             })
@@ -38,10 +38,10 @@ describe('Feed controller', function() {
                 body: {
                     title: 'post title',
                     content: 'post content',
-                    file: {
-                        path: 'thisisthepath'
-                    },
-                    creator: '5c0f66b979af55031b34729a'
+                    creator: '5c0f66b979af55031b34739a'
+                },
+                file: {
+                    path: 'thisisthepath'
                 }
             }
 
