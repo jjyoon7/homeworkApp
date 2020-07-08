@@ -50,7 +50,11 @@ describe('Feed controller', function() {
                 json: function() {}
             }
 
-            FeedController.createPost(req, res, () => {})
+            FeedController.createPost(req, res, () => {}).then(savedUser => {
+                expect(savedUser).to.have.property('posts')
+                expect(savedUser.posts).to.have.length(1)
+                done()
+            })
         })
     })
 
