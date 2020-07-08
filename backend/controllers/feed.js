@@ -65,8 +65,8 @@ exports.createPost = async (req, res, next) => {
         const savedUser = await user.save()
 
         //broadcast vs emit
-        io.getIO().emit('posts', { action: 'create', 
-                                   post: {...post._doc, creator: { _id: req.userId, name: user.name }} })
+        // io.getIO().emit('posts', { action: 'create', 
+        //                            post: {...post._doc, creator: { _id: req.userId, name: user.name }} })
 
         res.status(200).json({
             message: 'Post created succesfully',

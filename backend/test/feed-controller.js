@@ -2,7 +2,6 @@ const expect = require('chai').expect
 
 const mongoose = require('mongoose')
 const User = require('../models/user')
-const Post = require('../models/post')
 
 const FeedController = require('../controllers/feed')
 
@@ -37,12 +36,12 @@ describe('Feed controller', function() {
             const req = {
                 body: {
                     title: 'post title',
-                    content: 'post content',
-                    creator: '5c0f66b979af55031b34739a'
+                    content: 'post content'
                 },
                 file: {
                     path: 'thisisthepath'
-                }
+                },
+                userId: '5c0f66b979af55031b34739a'
             }
 
             const res = {
@@ -51,11 +50,13 @@ describe('Feed controller', function() {
                 },
                 json: function() {}
             }
-
+              
             FeedController.createPost(req, res, () => {}).then(savedUser => {
                 expect(savedUser).to.have.property('posts')
                 expect(savedUser.posts).to.have.length(1)
                 done()
+            }).catch(err => {
+                console.log(err)
             })
         })
     })
