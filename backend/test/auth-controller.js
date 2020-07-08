@@ -72,6 +72,7 @@ describe('Auth controller', function() {
                 AuthController.getUserStatus(req, res, () => {}).then(() => {
                     expect(res.statusCode).to.be.equal(200)
                     expect(res.userStatus).to.be.equal('New user')
+                    User.deleteMany({})
                     mongoose.disconnect().then(() => {
                         done()
                     })
