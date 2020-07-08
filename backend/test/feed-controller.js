@@ -1,12 +1,10 @@
 const expect = require('chai').expect
-const sinon = require('sinon')
 
 const mongoose = require('mongoose')
 const User = require('../models/user')
 const Post = require('../models/post')
 
 const FeedController = require('../controllers/feed')
-const { prependListener } = require('../models/user')
 
 require('dotenv').config()
 const uri = process.env.ATLAS_TEST_URI
@@ -35,7 +33,7 @@ describe('Feed controller', function() {
     })
 
     describe('createPost', function() {
-        it('should be able to create a post', function(done) {
+        it('should be able create a post and that post should save in posts array of the user who created', function(done) {
 
         })
     })
