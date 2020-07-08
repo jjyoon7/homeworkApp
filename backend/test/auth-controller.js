@@ -79,6 +79,7 @@ describe('Auth controller', function() {
                 done()
             })
 
+        })
     })
 
     after(function(done) {
