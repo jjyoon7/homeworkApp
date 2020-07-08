@@ -4,7 +4,7 @@
   "description": "backend homeworkapp",
   "main": "app",
   "scripts": {
-    "test": "mocha --timeout 500000",
+    "test": "mocha --timeout 5000000",
     "start": "node server.js"
   },
   "author": "Jay Yoon",

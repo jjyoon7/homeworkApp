@@ -46,7 +46,9 @@ describe('Feed controller', function() {
             }
 
             const res = {
-                status: function() {},
+                status: function() {
+                    return this
+                },
                 json: function() {}
             }
 
