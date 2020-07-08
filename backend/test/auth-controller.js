@@ -33,14 +33,6 @@ describe('Auth controller', function() {
         })
     })
 
-    beforeEach(function() {
-        //runs before every test
-    })
-
-    afterEach(function() {
-        //runs after every test
-    })
-
     describe('Login', function() {
         it('should throw an error code 500 if the access to the database failed', function(done) {
             sinon.stub(User, 'findOne')
