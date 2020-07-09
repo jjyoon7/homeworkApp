@@ -1,17 +1,14 @@
 const express = require('express')
 
 const path = require('path')
+const fs = require('fs')
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const multer = require('multer')
 
-const feedRoutes = require('./routes/feed')
-const authRoutes = require('./routes/auth')
-
 const app = express()
 
 const morgan = require('morgan')
-
 const cors = require('cors')
 
 const PORT = 5000 || process.env.PORT
@@ -33,7 +30,16 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
+const accessLogStream = fs.createWriteStream(
+    path.join(__dirname, 'access.log'),
+    { flags: 'a' }
+)
+
 const helmet = require('helmet')
+
+const feedRoutes = require('./routes/feed')
+const authRoutes = require('./routes/auth')
+
 app.use(helmet())
 
 app.use(bodyParser.urlencoded({extended: false}))
@@ -46,21 +52,12 @@ app.use(multer({
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
 require('dotenv').config()
-// app.use((req, res, next) => {
-//     res.setHeader('Access-Control-Allow-Origin', '*');
-//     res.setHeader(
-//       'Access-Control-Allow-Methods',
-//       'OPTIONS, GET, POST, PUT, PATCH, DELETE'
-//     );
-//     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//     next();
-//   });
 
 app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
-app.use(morgan('dev'))
+app.use(morgan('combined', { stream: accessLogStream }))
 
 app.use('/feed', feedRoutes)
 app.use('/auth', authRoutes)
