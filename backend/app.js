@@ -33,6 +33,9 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
+const helmet = require('helmet')
+app.use(helmet())
+
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 app.use(multer({
