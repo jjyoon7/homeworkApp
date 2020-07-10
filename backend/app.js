@@ -37,9 +37,6 @@ const accessLogStream = fs.createWriteStream(
 
 const helmet = require('helmet')
 
-const feedRoutes = require('./routes/feed')
-const authRoutes = require('./routes/auth')
-
 app.use(helmet())
 
 app.use(bodyParser.urlencoded({extended: false}))
@@ -59,6 +56,8 @@ app.use(cors({
 
 app.use(morgan('combined', { stream: accessLogStream }))
 
+const feedRoutes = require('./routes/feed')
+const authRoutes = require('./routes/auth')
 app.use('/feed', feedRoutes)
 app.use('/auth', authRoutes)
 
