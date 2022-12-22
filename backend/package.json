@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
     "helmet": "^3.23.3",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mogodb": "0.0.1-security",
     "mongoose": "^5.9.18",
     "morgan": "^1.10.0",
